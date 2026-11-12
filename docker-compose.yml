@@ -1,4 +1,25 @@
 services:
   fastapi:
-    image: python:3.14
-    build: /app/
+    build:
+      context: .
+      dockerfile: app/Dockerfile
+    ports:
+      - "127.0.0.1:8000:8000"
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: sports-events
+      DB_USER: sevrik
+      DB_PASSWORD: Fkneirf(13362)
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: sports-events
+      POSTGRES_USER: sevrik
+      POSTGRES_PASSWORD: Fkneirf(13362)
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - "postgres_data:/var/lib/postgresql/data"
+volumes:
+  postgres_data:

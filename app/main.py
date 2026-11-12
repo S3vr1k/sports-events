@@ -1,116 +1,21 @@
 from fastapi import FastAPI, HTTPException
+import os
+
+import psycopg #PostgreSQL
+from psycopg.rows import dict_row
 
 app = FastAPI()
 
-participants = [
-    {
-        "id": 1,
-        "name": "Иванов Александр Сергеевич",
-        "discipline": "running"
-    },
-    {
-        "id": 2,
-        "name": "Петрова Мария Андреевна",
-        "discipline": "running"
-    },
-    {
-        "id": 3,
-        "name": "Смирнов Артём Дмитриевич",
-        "discipline": "running"
-    },
-    {
-        "id": 4,
-        "name": "Кузнецов Максим Игоревич",
-        "discipline": "pushups"
-    },
-    {
-        "id": 5,
-        "name": "Соколова Анна Павловна",
-        "discipline": "pushups"
-    },
-    {
-        "id": 6,
-        "name": "Попов Дмитрий Алексеевич",
-        "discipline": "pushups"
-    },
-    {
-        "id": 7,
-        "name": "Волков Никита Романович",
-        "discipline": "pullups"
-    },
-    {
-        "id": 8,
-        "name": "Морозова Дарья Олеговна",
-        "discipline": "pullups"
-    },
-    {
-        "id": 9,
-        "name": "Новиков Михаил Денисович",
-        "discipline": "pullups"
-    },
-    {
-        "id": 10,
-        "name": "Фёдорова София Максимовна",
-        "discipline": "flexibility"
-    },
-    {
-        "id": 11,
-        "name": "Лебедев Егор Владимирович",
-        "discipline": "flexibility"
-    },
-    {
-        "id": 12,
-        "name": "Орлова Полина Викторовна",
-        "discipline": "flexibility"
-    },
-    {
-        "id": 13,
-        "name": "Семёнов Кирилл Антонович",
-        "discipline": "jumps"
-    },
-    {
-        "id": 14,
-        "name": "Павлова Анастасия Ильинична",
-        "discipline": "jumps"
-    },
-    {
-        "id": 15,
-        "name": "Белов Андрей Николаевич",
-        "discipline": "jumps"
-    }
-]
-events = [
-    {
-        "event": "running",
-        "title": "Бег на 3 километра",
-        "description": "Соревнование по бегу на длинную дистанцию",
-        "location": "Школьный стадион",
-    },
-    {
-        "event": "pushups",
-        "title": "Отжимания",
-        "description": "Соревнование по отжиманиям",
-        "location": "Спортивный зал",
-    },
-    {
-        "event": "pullups",
-        "title": "Подтягивания",
-        "description": "Соревнование по подтягиваниям",
-        "location": "Спортивный зал",
-    },
-    {
-        "event": "flexibility",
-        "title": "Гибкость",
-        "description": "Соревнование по растяжке",
-        "location": "Спортивный зал",
-    },
-    {
-        "event": "jumps",
-        "title": "Прыжки в длину",
-        "description": "Соревнование по прыжкам",
-        "location": "Школьный стадион",
-    }
-]
+#ПОДКЛЮЧЕНИЕ
+def get_connection():
+    return psycopg.connect(
+        host = os.environ["DB_HOST"],
+        port = os.environ["DB_PORT"],
+        dbname = os.environ["DB_NAME"],
+        user = os.environ["DB_USER"],
+        password = os.environ["DB_PASSWORD"],
+        row_factory = dict_row
+    )
 
 #ГЛАВНАЯ СТРАНИЦА
 @app.get("/")
@@ -122,102 +27,156 @@ def root():
 #СОБЫТИЯ
 @app.get("/events")
 def get_events():
-    return events
+    with get_connection() as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(
+                "SELECT event, title, description, location FROM events"
+            )
+            return cursor.fetchall()
 
 #ИНФОРМАЦИЯ О СОБЫТИИ
 @app.get("/events/{discipline}")
 def get_event_info(discipline: str):
-    for event in events:
-        if event["event"] == discipline:
-            return event
+    with get_connection() as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(
+                """
+                SELECT event, title, description, location FROM events
+                WHERE event = %s;
+                """, (discipline,)
+            )
+            event = cursor.fetchone()
     
-    raise HTTPException(
-        status_code=404,
-        detail="Дисциплина не найдена"
-    )
+    if event is None:
+        raise HTTPException(
+            status_code = 404,
+            detail = "Дисциплина не найдена"
+        )
+    
+    return event
 
 #ИНФОРМАЦИЯ ОБ УЧАСТНИКАХ ДИСЦИПЛИНЫ
 @app.get("/events/{discipline}/participants")
 def get_participants_discipline(discipline: str):
-    exists = any (
-        event for event in events
-        if event["event"] == discipline
-    )
+    with get_connection() as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(
+                "SELECT event FROM events WHERE event = %s",
+                (discipline,)
+            )
 
-    if not exists:
+            if cursor.fetchone() is None:
+                raise HTTPException(
+                    status_code=404,
+                    detail="Дисциплина не найдена"
+                )
+
+            cursor.execute(
+                """
+                SELECT id, name, discipline FROM participants
+                WHERE discipline = %s;
+                """, (discipline,)
+            )
+            result = cursor.fetchall()
+    
+    if result is None:
         raise HTTPException(
-            status_code=404,
-            detail="Дисциплина не найдена"
+            status_code = 404,
+            detail = "Дисциплина не найдена"
         )
-
-    return [
-        person for person in participants if person["discipline"] == discipline
-    ]
+    
+    return result
 
 #СПИСОК ВСЕХ УЧАСТНИКОВ
 @app.get("/participants")
 def get_participants_all():
-    return participants
+    with get_connection() as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(
+                "SELECT id, name, discipline FROM participants"
+            )
+            return cursor.fetchall()
 
 #КОНКРЕТНЫЙ УЧАСТНИК
 @app.get("/participants/{participant_id}")
 def get_participant(participant_id: int):
-    for person in participants:
-        if person["id"] == participant_id:
-            return person
-    raise HTTPException(
-            status_code=404,
-            detail="Такого участника нет"
+    with get_connection() as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(
+                """
+                SELECT id, name, discipline FROM participants
+                WHERE id = %s;
+                """, (participant_id,)
+            )
+
+            result = cursor.fetchone()
+
+    if result is None:
+        raise HTTPException(
+                status_code = 404,
+                detail = "Такого участника нет"
         )
+    return result
 
 #ЗАПИСЬ НА ДИСЦИПЛИНУ
 @app.post("/events/{discipline}/register")
 def register_participants(discipline: str, name: str):
-    next_id = max((person["id"] for person in participants), default = 0) + 1
-
-    exists = any (
-        event for event in events
-        if event["event"] == discipline
-    )
-
-    if not exists:
-        raise HTTPException(
-            status_code=404,
-            detail="Дисциплина не найдена"
-        )
-    
     name = name.strip()
 
     if not name:
         raise HTTPException(
-            status_code=422,
-            detail="Укажите ФИО участника"
+            status_code = 422,
+            detail = "Укажите ФИО участника"
         )
 
-    participant = {
-        "id" : next_id,
-        "name" : name,
-        "discipline" : discipline
-    }
+    with get_connection() as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(
+                "SELECT event FROM events WHERE event = %s", (discipline,)
+            )
 
-    participants.append(participant)
+            if cursor.fetchone() is None:
+                raise HTTPException(
+                status_code=404,
+                detail="Дисциплина не найдена"
+            )
 
-    return participant
+            cursor.execute(
+                """
+                INSERT INTO participants(name, discipline)
+                VALUES(%s, %s)
+                RETURNING id, name, discipline;
+                """, (name, discipline)
+            )
+            result = cursor.fetchone()
 
-# УДАЛЕНИЕ РЕГИСТРАЦИИ
+    if result is None:
+        raise HTTPException(
+            status_code = 404,
+            detail = "Ошибочный ввод данных"
+        )
+    return result
+
+#УДАЛЕНИЕ РЕГИСТРАЦИИ
 @app.delete("/participants/{participant_id}")
 def delete_participant(participant_id: int):
+
+    with get_connection() as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(
+                """
+                DELETE FROM participants
+                WHERE id = %s
+                RETURNING id, name, discipline;
+                """, (participant_id,)
+            )
+
+            result = cursor.fetchone()
+
+    if result is None:
+        raise HTTPException(
+            status_code = 404,
+            detail = "Такого участника нет"
+        )
     
-    for index, person in enumerate(participants):
-        if person["id"] == participant_id:
-            deleted_person = participants.pop(index)
-
-            return {
-                "message": "Участник удалён",
-                "participant": deleted_person
-            }
-
-    raise HTTPException(
-        status_code=404,
-        detail="Такого участника нет"
-    )
+    return result
