@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Спортивный фестиваль школы №2051. Соревнования, участники и регистрация.">
+  <meta name="theme-color" content="#b42b30">
+  <title>Все участники — Школа №2051</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="/app.js" defer></script>
+</head>
+<body data-page="participants">
+  <a class="skip-link" href="#main">Перейти к содержимому</a>
+  <header class="site-header">
+    <div class="container school-header">
+      <a class="school-number" href="/" aria-label="Школа №2051 — на главную">2051</a>
+      <div class="school-name">
+        <p>Государственное бюджетное общеобразовательное учреждение города Москвы</p>
+        <strong>«Школа № 2051»</strong>
+        <p class="muted">Школьный спортивный фестиваль</p>
+      </div>
+      <a class="school-link" href="https://sch2051uv-new.mskobr.ru/" target="_blank" rel="noopener noreferrer">Сайт школы</a>
+    </div>
+    <nav class="main-nav" aria-label="Основная навигация">
+      <div class="container">
+        <a href="/">Главная</a>
+        <a href="/events.html">Соревнования</a>
+        <a href="/participants.html" aria-current="page">Все участники</a>
+        <a href="/registration.html">Регистрация</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container" id="main">
+    <section class="section">
+      <h1>Все участники</h1>
+      <div class="table-toolbar">
+        <div class="filter-field">
+          <label for="participant-search">Поиск по ФИО</label>
+          <input id="participant-search" type="search" placeholder="Введите фамилию или имя">
+        </div>
+        <div class="filter-field">
+          <label for="discipline-filter">Дисциплина</label>
+          <select id="discipline-filter"><option value="">Все дисциплины</option></select>
+        </div>
+        <button class="button button-outline" id="refresh-participants" type="button">Обновить</button>
+      </div>
+      <p id="participants-state" class="loading-message" role="status">Загружаем участников…</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th scope="col">ФИО участника</th><th scope="col">Дисциплина</th><th scope="col">Информация</th></tr></thead>
+          <tbody id="participants-body"></tbody>
+        </table>
+      </div>
+      <p class="table-caption" id="participants-caption" aria-live="polite"></p>
+    </section>
+    <noscript><p class="section">Включите JavaScript, чтобы загрузить данные соревнований и участников и пользоваться регистрацией.</p></noscript>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>Спортивный фестиваль школы №2051</p>
+      <p class="muted">Учебный проект. Не является официальным сайтом школы.</p>
+      <a href="https://unsplash.com/photos/group-of-people-running-on-stadium-atSaEOeE8Nk" target="_blank" rel="noopener noreferrer">Фотография: Steven Lelham / Unsplash</a>
+    </div>
+  </footer>
+</body>
+</html>

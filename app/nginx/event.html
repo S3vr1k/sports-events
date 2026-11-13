@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Спортивный фестиваль школы №2051. Соревнования, участники и регистрация.">
+  <meta name="theme-color" content="#b42b30">
+  <title>Соревнование — Школа №2051</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="/app.js" defer></script>
+</head>
+<body data-page="event">
+  <a class="skip-link" href="#main">Перейти к содержимому</a>
+  <header class="site-header">
+    <div class="container school-header">
+      <a class="school-number" href="/" aria-label="Школа №2051 — на главную">2051</a>
+      <div class="school-name">
+        <p>Государственное бюджетное общеобразовательное учреждение города Москвы</p>
+        <strong>«Школа № 2051»</strong>
+        <p class="muted">Школьный спортивный фестиваль</p>
+      </div>
+      <a class="school-link" href="https://sch2051uv-new.mskobr.ru/" target="_blank" rel="noopener noreferrer">Сайт школы</a>
+    </div>
+    <nav class="main-nav" aria-label="Основная навигация">
+      <div class="container">
+        <a href="/">Главная</a>
+        <a href="/events.html">Соревнования</a>
+        <a href="/participants.html">Все участники</a>
+        <a href="/registration.html">Регистрация</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container" id="main">
+    <section class="section">
+      <p class="back-link"><a href="/events.html">← Все соревнования</a></p>
+      <h1 id="event-title">Соревнование</h1>
+      <p id="event-state" role="status">Загружаем данные…</p>
+      <div id="event-content" hidden>
+        <p id="event-description"></p>
+        <p><strong>Место проведения:</strong> <span id="event-location"></span></p>
+        <a class="button" id="event-register" href="/registration.html">Зарегистрироваться</a>
+        <div class="medals-panel">
+          <h2>Нормативы на медали</h2>
+          <p>Нормативы и возрастные категории будут добавлены после утверждения организатором.</p>
+          <ul>
+            <li>Золотая медаль — норматив уточняется.</li>
+            <li>Серебряная медаль — норматив уточняется.</li>
+            <li>Бронзовая медаль — норматив уточняется.</li>
+          </ul>
+        </div>
+        <h2>Участники соревнования</h2>
+        <p id="event-participants-state" role="status"></p>
+        <ul id="event-participants-list" class="event-participants-list"></ul>
+      </div>
+    </section>
+    <noscript><p class="section">Включите JavaScript, чтобы загрузить данные соревнований и участников и пользоваться регистрацией.</p></noscript>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>Спортивный фестиваль школы №2051</p>
+      <p class="muted">Учебный проект. Не является официальным сайтом школы.</p>
+      <a href="https://unsplash.com/photos/group-of-people-running-on-stadium-atSaEOeE8Nk" target="_blank" rel="noopener noreferrer">Фотография: Steven Lelham / Unsplash</a>
+    </div>
+  </footer>
+</body>
+</html>

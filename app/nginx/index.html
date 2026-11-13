@@ -1,12 +1,66 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Тест</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Спортивный фестиваль школы №2051. Соревнования, участники и регистрация.">
+  <meta name="theme-color" content="#b42b30">
+  <title>Спортивный фестиваль — Школа №2051</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="/app.js" defer></script>
 </head>
-<body>
-    <h1>Здесь будет страничка для спортивного фестиваля</h1>
-    <p>Пока что она пустая :3</p>
+<body data-page="home">
+  <a class="skip-link" href="#main">Перейти к содержимому</a>
+  <header class="site-header">
+    <div class="container school-header">
+      <a class="school-number" href="/" aria-label="Школа №2051 — на главную">2051</a>
+      <div class="school-name">
+        <p>Государственное бюджетное общеобразовательное учреждение города Москвы</p>
+        <strong>«Школа № 2051»</strong>
+        <p class="muted">Школьный спортивный фестиваль</p>
+      </div>
+      <a class="school-link" href="https://sch2051uv-new.mskobr.ru/" target="_blank" rel="noopener noreferrer">Сайт школы</a>
+    </div>
+    <nav class="main-nav" aria-label="Основная навигация">
+      <div class="container">
+        <a href="/" aria-current="page">Главная</a>
+        <a href="/events.html">Соревнования</a>
+        <a href="/participants.html">Все участники</a>
+        <a href="/registration.html">Регистрация</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container" id="main">
+    <section class="intro" aria-labelledby="home-title">
+      <div>
+        <h1 id="home-title">Школьный спортивный фестиваль</h1>
+        <p>Приглашаем учеников школы №2051 принять участие в спортивных соревнованиях.</p>
+        <p>На сайте можно посмотреть программу фестиваля, ознакомиться со списками участников и записаться на выбранную дисциплину.</p>
+        <a class="button" href="/registration.html">Зарегистрироваться</a>
+        <p class="festival-counts">Дисциплин: <b id="event-count">—</b> · Регистраций: <b id="participant-count">—</b></p>
+        <p id="home-state" role="status"></p>
+      </div>
+      <img src="/assets/runners.jpg" alt="Бегуны на дорожке стадиона" width="360" height="210" fetchpriority="high">
+    </section>
+    <section class="section">
+      <h2>Информация о фестивале</h2>
+      <p>В программе — бег, силовые упражнения, гибкость и прыжки в длину. Шахматный турнир планируется добавить позднее.</p>
+      <p>Описание каждой дисциплины, место проведения и список участников доступны на странице соревнования.</p>
+      <div class="page-links">
+        <a href="/events.html">Посмотреть соревнования</a>
+        <a href="/participants.html">Все участники</a>
+      </div>
+    </section>
+    <noscript><p class="section">Включите JavaScript, чтобы загрузить данные соревнований и участников и пользоваться регистрацией.</p></noscript>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>Спортивный фестиваль школы №2051</p>
+      <p class="muted">Учебный проект. Не является официальным сайтом школы.</p>
+      <a href="https://unsplash.com/photos/group-of-people-running-on-stadium-atSaEOeE8Nk" target="_blank" rel="noopener noreferrer">Фотография: Steven Lelham / Unsplash</a>
+    </div>
+  </footer>
 </body>
 </html>

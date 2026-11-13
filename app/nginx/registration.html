@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Спортивный фестиваль школы №2051. Соревнования, участники и регистрация.">
+  <meta name="theme-color" content="#b42b30">
+  <title>Регистрация — Школа №2051</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="/app.js" defer></script>
+</head>
+<body data-page="registration">
+  <a class="skip-link" href="#main">Перейти к содержимому</a>
+  <header class="site-header">
+    <div class="container school-header">
+      <a class="school-number" href="/" aria-label="Школа №2051 — на главную">2051</a>
+      <div class="school-name">
+        <p>Государственное бюджетное общеобразовательное учреждение города Москвы</p>
+        <strong>«Школа № 2051»</strong>
+        <p class="muted">Школьный спортивный фестиваль</p>
+      </div>
+      <a class="school-link" href="https://sch2051uv-new.mskobr.ru/" target="_blank" rel="noopener noreferrer">Сайт школы</a>
+    </div>
+    <nav class="main-nav" aria-label="Основная навигация">
+      <div class="container">
+        <a href="/">Главная</a>
+        <a href="/events.html">Соревнования</a>
+        <a href="/participants.html">Все участники</a>
+        <a href="/registration.html" aria-current="page">Регистрация</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container" id="main">
+    <section class="section">
+      <h1>Регистрация участника</h1>
+      <p class="section-description">Укажите ФИО и выберите соревнование. Для записи на несколько дисциплин заполните форму отдельно для каждой.</p>
+      <p id="registration-state" class="loading-message" role="status">Загружаем дисциплины…</p>
+      <form id="registration-form">
+        <label for="full-name">Фамилия, имя и отчество</label>
+        <input id="full-name" name="name" autocomplete="name" maxlength="199" required placeholder="Иванов Иван Иванович">
+        <label for="registration-discipline">Соревнование</label>
+        <select id="registration-discipline" name="discipline" required disabled><option value="">Загружаем дисциплины…</option></select>
+        <p class="form-help">Проверьте правильность написания ФИО перед отправкой.</p>
+        <button class="button" id="registration-submit" type="submit" disabled>Зарегистрироваться</button>
+        <p id="registration-message" class="form-message" role="status" aria-live="polite"></p>
+        <p id="registration-result" hidden><a id="registered-participant" href="/participants.html">Открыть карточку участника</a> · <a href="/participants.html">Все участники</a></p>
+      </form>
+    </section>
+    <noscript><p class="section">Включите JavaScript, чтобы загрузить данные соревнований и участников и пользоваться регистрацией.</p></noscript>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>Спортивный фестиваль школы №2051</p>
+      <p class="muted">Учебный проект. Не является официальным сайтом школы.</p>
+      <a href="https://unsplash.com/photos/group-of-people-running-on-stadium-atSaEOeE8Nk" target="_blank" rel="noopener noreferrer">Фотография: Steven Lelham / Unsplash</a>
+    </div>
+  </footer>
+</body>
+</html>

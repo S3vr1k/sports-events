@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Спортивный фестиваль школы №2051. Соревнования, участники и регистрация.">
+  <meta name="theme-color" content="#b42b30">
+  <title>Участник — Школа №2051</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="/app.js" defer></script>
+</head>
+<body data-page="participant">
+  <a class="skip-link" href="#main">Перейти к содержимому</a>
+  <header class="site-header">
+    <div class="container school-header">
+      <a class="school-number" href="/" aria-label="Школа №2051 — на главную">2051</a>
+      <div class="school-name">
+        <p>Государственное бюджетное общеобразовательное учреждение города Москвы</p>
+        <strong>«Школа № 2051»</strong>
+        <p class="muted">Школьный спортивный фестиваль</p>
+      </div>
+      <a class="school-link" href="https://sch2051uv-new.mskobr.ru/" target="_blank" rel="noopener noreferrer">Сайт школы</a>
+    </div>
+    <nav class="main-nav" aria-label="Основная навигация">
+      <div class="container">
+        <a href="/">Главная</a>
+        <a href="/events.html">Соревнования</a>
+        <a href="/participants.html">Все участники</a>
+        <a href="/registration.html">Регистрация</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container" id="main">
+    <section class="section">
+      <p class="back-link"><a href="/participants.html">← Все участники</a></p>
+      <h1 id="participant-title">Участник</h1>
+      <p id="participant-state" role="status">Загружаем данные…</p>
+      <div id="participant-content" hidden>
+        <dl class="participant-details">
+          <div><dt>Номер регистрации</dt><dd id="participant-id"></dd></div>
+          <div><dt>Дисциплина</dt><dd><a id="participant-event" href="/events.html"></a></dd></div>
+          <div><dt>Место проведения</dt><dd id="participant-location"></dd></div>
+        </dl>
+        <button class="button button-danger" id="cancel-registration" type="button" disabled>Отменить регистрацию</button>
+        <p class="form-help">Будет удалена только регистрация на указанную дисциплину.</p>
+      </div>
+    </section>
+    <noscript><p class="section">Включите JavaScript, чтобы загрузить данные соревнований и участников и пользоваться регистрацией.</p></noscript>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>Спортивный фестиваль школы №2051</p>
+      <p class="muted">Учебный проект. Не является официальным сайтом школы.</p>
+      <a href="https://unsplash.com/photos/group-of-people-running-on-stadium-atSaEOeE8Nk" target="_blank" rel="noopener noreferrer">Фотография: Steven Lelham / Unsplash</a>
+    </div>
+  </footer>
+</body>
+</html>
