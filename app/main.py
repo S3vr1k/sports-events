@@ -20,7 +20,7 @@ def get_connection():
 #ГЛАВНАЯ СТРАНИЦА
 @app.get("/")
 def root():
-    return {"Это официальный сайт, посвящённый спортивному фестивалю Школы №2051\n"\
+    return {"message" : "Это официальный сайт, посвящённый спортивному фестивалю Школы №2051\n"\
         "Изучите все дисциплины и обязательно примите в них участие\n"\
         "P.S: type /events"}
 
@@ -78,13 +78,7 @@ def get_participants_discipline(discipline: str):
                 """, (discipline,)
             )
             result = cursor.fetchall()
-    
-    if result is None:
-        raise HTTPException(
-            status_code = 404,
-            detail = "Дисциплина не найдена"
-        )
-    
+
     return result
 
 #СПИСОК ВСЕХ УЧАСТНИКОВ
@@ -123,10 +117,10 @@ def get_participant(participant_id: int):
 def register_participants(discipline: str, name: str):
     name = name.strip()
 
-    if not name:
+    if not name or len(name) >= 200:
         raise HTTPException(
             status_code = 422,
-            detail = "Укажите ФИО участника"
+            detail = "Неправильное ФИО"
         )
 
     with get_connection() as connection:
